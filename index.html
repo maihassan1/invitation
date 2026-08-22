@@ -274,6 +274,19 @@ footer .monogram-img{height:clamp(66px,17vw,96px)}
   animation:bar .85s ease-in-out infinite}
 @keyframes bar{0%,100%{height:4px}50%{height:26px}}
 
+/* a small, permanent way to silence the music */
+.sound-toggle{position:fixed;right:1rem;bottom:1rem;z-index:60;
+  width:44px;height:44px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;line-height:1;color:var(--gold);
+  background:rgba(251,247,240,.9);border:1px solid rgba(138,100,18,.45);
+  box-shadow:0 4px 14px rgba(120,84,36,.18);backdrop-filter:blur(4px);
+  transition:transform .25s,background .25s}
+.sound-toggle:hover{transform:scale(1.06);background:var(--bg)}
+.sound-toggle::after{content:"";position:absolute;width:0;height:1.5px;
+  background:currentColor;transform:rotate(-45deg);transition:width .25s}
+.sound-toggle.is-off::after{width:56%}
+
 /* ===================================================================
    9. RSVP + FOOTER
    =================================================================== */
@@ -443,9 +456,11 @@ footer{padding:4rem 1.25rem;text-align:center;background:var(--bg);border-top:1p
   </filter>
 </svg>
 
-<!-- Optional background music: drop a file named music.mp3 next to this page.
-     If the file is missing, the music button hides itself automatically. -->
-<audio id="audio" loop preload="none"><source src="music.mp3" type="audio/mpeg"></audio>
+<!-- Background music. Put the file in the project and set INVITE.audio below. -->
+<audio id="audio" loop preload="auto"></audio>
+
+<!-- discreet sound control; appears once the invitation is open -->
+<button class="sound-toggle" id="sound-toggle" type="button" aria-label="Turn music on or off" hidden>♪</button>
 
 <main id="main" style="opacity:0;transition:opacity 1.4s 1.9s">
 
@@ -612,6 +627,7 @@ footer{padding:4rem 1.25rem;text-align:center;background:var(--bg);border-top:1p
 const INVITE = {
   groom:      "Mohamed",
   bride:      "Nourhan",
+  audio:      "music.mp3",              // background song; "" disables it entirely
   logo:       "images/logo-gold.png",   // the gold monogram used throughout
   monogram:   "M ✦ N",                  // text fallback / alt text only
 
@@ -730,22 +746,43 @@ $('ics-btn').addEventListener('click', () => {
 
 /* ---------- curtains + music unlock ---------- */
 const audio = $('audio');
+const soundBtn = $('sound-toggle');
 let musicReady = false;
-audio.addEventListener('canplay', () => { musicReady = true; }, {once:true});
-audio.addEventListener('error', () => { $('music-section').style.display = 'none'; }, {once:true});
-audio.load();
+
+if (INVITE.audio){
+  audio.src = INVITE.audio;
+  audio.addEventListener('canplay', () => { musicReady = true; }, {once:true});
+  audio.addEventListener('error', () => {          // missing or unplayable file
+    musicReady = false;
+    if (soundBtn) soundBtn.hidden = true;
+  }, {once:true});
+  audio.load();
+}
+
+/* the toggle: the only control, so it stays reachable the whole way down */
+if (soundBtn){
+  soundBtn.addEventListener('click', () => {
+    if (audio.paused){ audio.play().then(() => setPlaying(true)).catch(() => {}); }
+    else { audio.pause(); setPlaying(false); }
+  });
+}
 
 $('enter-btn').addEventListener('click', () => {
   document.body.classList.add('is-open');
   $('main').style.opacity = 1;
   audio.volume = 0.45;
-  audio.play().then(() => setPlaying(true)).catch(() => {});   // blocked autoplay is fine
+  if (INVITE.audio){
+    // this click is the user gesture browsers require before audio may start
+    audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    if (soundBtn) soundBtn.hidden = false;
+  }
   setTimeout(() => { $('gate').remove(); document.querySelectorAll('.curtain').forEach(c => c.remove()); }, 3000);
 });
 
 /* the music starts with the Enter tap; the wave is the only indicator now */
 function setPlaying(on){
   notesOn(on);
+  if (soundBtn) soundBtn.classList.toggle('is-off', !on);
   const w = $('wave');
   if (w) w.classList.toggle('on', on);
   const label = $('music-label');
