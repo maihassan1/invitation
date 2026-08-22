@@ -11,6 +11,7 @@
 <meta property="og:description" content="Join us as we celebrate our wedding day.">
 <meta property="og:type" content="website">
 
+<link rel="preload" href="music.mp3" as="audio" type="audio/mpeg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Marcellus&family=Aref+Ruqaa:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Imperial+Script&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
@@ -457,7 +458,7 @@ footer{padding:4rem 1.25rem;text-align:center;background:var(--bg);border-top:1p
 </svg>
 
 <!-- Background music. Put the file in the project and set INVITE.audio below. -->
-<audio id="audio" loop preload="auto"></audio>
+<audio id="audio" loop preload="auto" src="music.mp3"></audio>
 
 <!-- discreet sound control; appears once the invitation is open -->
 <button class="sound-toggle" id="sound-toggle" type="button" aria-label="Turn music on or off" hidden>♪</button>
@@ -750,7 +751,9 @@ const soundBtn = $('sound-toggle');
 let musicReady = false;
 
 if (INVITE.audio){
-  audio.src = INVITE.audio;
+  // the markup already points at music.mp3 and has been downloading since
+  // parse; only touch src if the config names a different file
+  if (!audio.getAttribute('src').endsWith(INVITE.audio)) audio.src = INVITE.audio;
   audio.addEventListener('canplay', () => { musicReady = true; }, {once:true});
   audio.addEventListener('error', () => {          // missing or unplayable file
     musicReady = false;
