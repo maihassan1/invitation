@@ -201,7 +201,10 @@ h1,h2{font-family:var(--ornate);font-weight:700;line-height:1.35;letter-spacing:
 footer .monogram-img{height:clamp(66px,17vw,96px)}
 .names{font-family:var(--script);font-weight:400;font-size:clamp(2.6rem,12vw,4.6rem);
   letter-spacing:0;color:var(--wine);margin:.6rem 0 .8rem;line-height:1.25;text-transform:none}
-.names .amp{font-family:var(--script);font-size:.85em;color:var(--gold);opacity:.9;padding:0 .12em}
+/* the hero names paint their text transparent for the gold shimmer, and that
+   is inherited — the ampersand must set its own fill or it renders invisible */
+.names .amp{font-family:var(--script);font-size:.85em;color:var(--gold);
+  -webkit-text-fill-color:var(--gold);background:none;opacity:.95;padding:0 .1em}
 .amp{color:var(--gold);font-size:.7em;opacity:.85}
 
 /* ===================================================================
