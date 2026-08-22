@@ -242,7 +242,7 @@ footer .monogram-img{height:clamp(66px,17vw,96px)}
   background:
     /* the scan's own colour, no tan wash; tiled small so the fibre grain
        reads finer than the stretched-to-fill version did */
-    var(--papyrus-img,none) center/42% auto repeat,
+    var(--papyrus-img,none) center/24% auto repeat,
     radial-gradient(ellipse 58% 42% at 18% 22%,rgba(150,108,52,.09),transparent 70%),
     radial-gradient(ellipse 52% 38% at 80% 72%,rgba(133,94,42,.10),transparent 72%),
     radial-gradient(ellipse 44% 30% at 58% 10%,rgba(120,84,36,.07),transparent 74%),
@@ -398,7 +398,7 @@ footer{padding:4rem 1.25rem 3rem;text-align:center;background:var(--bg);border-t
 /* ===================================================================
    11. MUSIC STAGE  —  gilded frame + arched cartouche
    =================================================================== */
-.stage{max-width:min(560px,92vw);margin:1.5rem auto 2.6rem}
+.stage{max-width:min(620px,97vw);margin:1.5rem auto 2.6rem}
 /* the arched panel, in the invitation's wine */
 .cartouche{position:relative;text-align:center;color:#4A3418;
   /* the plate carries the image's own 720x1280 proportions, so the plaster is
@@ -425,11 +425,13 @@ footer{padding:4rem 1.25rem 3rem;text-align:center;background:var(--bg);border-t
 .lyric + .lyric{margin-top:.15em}
 .cart-rule{width:64%;height:1px;margin:1.75em auto;
   background:linear-gradient(90deg,transparent,rgba(116,78,30,.55),transparent)}
-.cart-en{font-family:var(--display);color:#6B1226;letter-spacing:.1em;max-width:36ch;margin-inline:auto;
-  font-size:clamp(.85rem,3.9vw,1.38rem);
-  font-size:clamp(.9rem,4.7cqw,1.62rem);line-height:2;text-transform:uppercase;
+/* set like the message panel: Cormorant Garamond italic, sentence case */
+.cart-en{font-family:var(--serif);color:#6B1226;font-style:italic;text-transform:none;
+  letter-spacing:.01em;max-width:30ch;margin-inline:auto;
+  font-size:clamp(1.05rem,5.2vw,1.75rem);
+  font-size:clamp(1.05rem,6.1cqw,1.95rem);line-height:1.7;
   text-shadow:0 1px 0 rgba(255,252,244,.5)}
-.cart-en + .cart-en{margin-top:1.25em}
+.cart-en + .cart-en{margin-top:1em}
 
 /* dust inside the panel */
 .cart-spark{position:absolute;z-index:1;color:var(--gold-lite);font-size:9px;opacity:0;
