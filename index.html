@@ -179,8 +179,10 @@ h1,h2{font-family:var(--ornate);font-weight:700;line-height:1.35;letter-spacing:
 .hero__overlay .names{font-size:clamp(1.55rem,10cqw,4rem)}
 .hero__overlay .monogram-img{height:clamp(60px,21cqw,140px)}
 .hero__overlay .label{font-size:clamp(.58rem,3.15cqw,1.2rem)}
-.hero__sub{font-style:italic;opacity:.7;margin-top:.25rem;
-  font-size:clamp(.75rem,4cqw,1.5rem)}
+/* matches the small-caps line above it, one step quieter */
+.hero__sub{font-family:var(--label);text-transform:uppercase;letter-spacing:.16em;
+  color:var(--wine);opacity:.62;margin-top:.45rem;font-style:normal;
+  font-size:clamp(.54rem,2.9cqw,1.1rem)}
 .hero__date{letter-spacing:.12em;margin-top:.7rem;
   font-size:clamp(.72rem,3.5cqw,1.35rem)}
 .hero__arabic{margin-top:.7rem;opacity:.85;line-height:1.9;
@@ -292,7 +294,13 @@ footer .monogram-img{height:clamp(66px,17vw,96px)}
    9. RSVP + FOOTER
    =================================================================== */
 .rsvp-row{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center;margin-top:2rem}
-footer{padding:4rem 1.25rem;text-align:center;background:var(--bg);border-top:1px solid rgba(138,100,18,.25)}
+footer{padding:4rem 1.25rem 3rem;text-align:center;background:var(--bg);border-top:1px solid rgba(138,100,18,.25)}
+/* maker's credit — deliberately quiet */
+.credit{margin-top:3.2rem;font-family:var(--label);font-size:.66rem;letter-spacing:.09em;
+  color:var(--text);opacity:.45;line-height:2}
+.credit a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(138,100,18,.3)}
+.credit a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.credit span{margin:0 .45em;opacity:.6}
 
 /* ===================================================================
    10. MOTION  —  entrances, shimmer, parallax, micro-interactions
@@ -616,6 +624,13 @@ footer{padding:4rem 1.25rem;text-align:center;background:var(--bg);border-top:1p
       <p class="names gold" id="foot-names" style="font-size:clamp(2rem,9vw,3rem);margin-top:.4rem;color:var(--gold)"></p>
       <p id="foot-date" style="opacity:.65;margin-top:.6rem"></p>
     </div>
+
+    <p class="credit">
+      Created by
+      <a href="mailto:maih5413@gmail.com">maih5413@gmail.com</a>
+      <span aria-hidden="true">·</span>
+      <a href="tel:+201140954022">+20 114 095 4022</a>
+    </p>
   </footer>
 
 </main>
