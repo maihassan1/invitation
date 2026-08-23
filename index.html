@@ -401,8 +401,9 @@ footer{padding:4rem 1.25rem 3rem;text-align:center;background:var(--bg);border-t
 /* ===================================================================
    11. MUSIC STAGE  —  gilded frame + arched cartouche
    =================================================================== */
-/* on phones the section's own padding is the limiter, so the cap only
-   bites on wider screens */
+/* the section's 1.25rem side padding was the gutter around the plate;
+   drop it here so the plate can reach the screen edges on a phone */
+#music-section{padding-left:0;padding-right:0}
 .stage{max-width:min(700px,100%);margin:1.5rem auto 2.6rem}
 /* the arched panel, in the invitation's wine */
 .cartouche{position:relative;text-align:center;color:#4A3418;
